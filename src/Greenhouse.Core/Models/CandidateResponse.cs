@@ -13,13 +13,13 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string LastName { get; set; }
 
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
 
         [JsonProperty("employee_id")]
-        public object EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
     }
 
     public class PhoneNumber
@@ -34,7 +34,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     public class KeyedCustomFields
     {
         [JsonProperty("salary_expectations")]
-        public object SalaryExpectations { get; set; }
+        public string SalaryExpectations { get; set; }
     }
 
     public class EmailAddress
@@ -55,7 +55,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string SchoolName { get; set; }
 
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("end_date")]
         public DateTime? EndDate { get; set; }
@@ -70,7 +70,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     public class CustomFields
     {
         [JsonProperty("salary_expectations")]
-        public object SalaryExpectations { get; set; }
+        public string SalaryExpectations { get; set; }
     }
 
     public class Coordinator
@@ -82,13 +82,13 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string LastName { get; set; }
 
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public int Id { get; set; }
 
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
 
         [JsonProperty("employee_id")]
-        public object EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
     }
 
     public class Attachment
@@ -109,7 +109,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string PublicName { get; set; }
 
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public int Id { get; set; }
     }
 
     public class ProspectDetail
@@ -130,7 +130,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string Name { get; set; }
 
         [JsonProperty("id")]
-        public object Id { get; set; }
+        public int Id { get; set; }
     }
 
     public class CurrentStage
@@ -181,7 +181,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public object ProspectiveOffice { get; set; }
 
         [JsonProperty("prospective_department")]
-        public object ProspectiveDepartment { get; set; }
+        public Department ProspectiveDepartment { get; set; }
 
         [JsonProperty("prospect_detail")]
         public ProspectDetail ProspectDetail { get; set; }
@@ -222,6 +222,33 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         [JsonProperty("answers")]
         public List<object> Answers { get; set; }
     }
+
+    public class Department
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("parent_id")]
+        public int ParentId { get; set; }
+
+        [JsonProperty("parent_department_external_id")]
+        public string ParentDepartmentExternalId { get; set; }
+
+        [JsonProperty("child_ids")]
+        public int[] ChildIds { get; set; }
+
+        [JsonProperty("child_department_external_ids")]
+        public string[] ChildDepartmentExternalIds { get; set; }
+
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+    }
+
+
+
 
     public class Address
     {
