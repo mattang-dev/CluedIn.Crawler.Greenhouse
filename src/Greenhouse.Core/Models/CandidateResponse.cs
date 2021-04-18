@@ -330,5 +330,85 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public List<Address> Addresses { get; set; }
     }
 
+    public class Offer
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+        [JsonProperty("version")]
+        public int Version { get; set; }
+        [JsonProperty("application_id")]
+        public int ApplicationId { get; set; }
+        [JsonProperty("job_id")]
+        public int JobId { get; set; }
+        [JsonProperty("candidate_id")]
+        public int CandidateId { get; set; }
+        [JsonProperty("opening")]
+        public JobOpening JobOpening { get; set; }
+        [JsonProperty("created_at")]
+        public DateTime CreatedAt { get; set; }
+        [JsonProperty("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+        [JsonProperty("sent_at")]
+        public DateTime SentAt { get; set; }
+        [JsonProperty("resolved_at")]
+        public DateTime ResolvedAt { get; set; }
+        [JsonProperty("starts_at")]
+        public DateTime StartsAt { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+        //[JsonProperty("custom_fields")]
+        //public Custom_Fields CustomFields { get; set; }
+        [JsonProperty("keyed_custom_fields")]
+        public KeyedCustomField KeyedCustomFields { get; set; }
+    }
+
+    public class JobOpening
+    {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+        [JsonProperty("opening_id")]
+        public string OpeningId { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+        [JsonProperty("opened_at")]
+        public DateTime OpenedAt { get; set; }
+        [JsonProperty("closed_at")]
+        public DateTime? ClosedAt { get; set; }
+        [JsonProperty("application_id")]
+        public int ApplicationId { get; set; }
+        [JsonProperty("close_reason")]
+        public string CloseReason { get; set; }
+    }
+
+  
+
+    public class KeyedCustomField
+    {
+        [JsonProperty("time_type")]
+        public CustomField TimeType { get; set; }
+        [JsonProperty("favorite_station")]
+        public CustomField FavoriteStation { get; set; }
+        [JsonProperty("best_seasons")]
+        public CustomField BestSeasons { get; set; }
+        [JsonProperty("start_date")]
+        public CustomField StartDate { get; set; }
+        [JsonProperty("will_negotiate")]
+        public CustomField WillNegotiate { get; set; }
+        [JsonProperty("salary")]
+        public CustomField Salary { get; set; }
+        [JsonProperty("notes")]
+        public CustomField Notes { get; set; }
+    }
+
+    public class CustomField
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        [JsonProperty("value")]
+        public string Value { get; set; }
+    }
+
 
 }
