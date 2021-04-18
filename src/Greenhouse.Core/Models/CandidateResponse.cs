@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace CluedIn.Crawling.Greenhouse.Core.Models
 {
     public class Recruiter
     {
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -26,7 +24,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class PhoneNumber
     {
-
         [JsonProperty("value")]
         public string Value { get; set; }
 
@@ -36,14 +33,12 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class KeyedCustomFields
     {
-
         [JsonProperty("salary_expectations")]
         public object SalaryExpectations { get; set; }
     }
 
     public class EmailAddress
     {
-
         [JsonProperty("value")]
         public string Value { get; set; }
 
@@ -53,7 +48,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Education
     {
-
         [JsonProperty("start_date")]
         public DateTime? StartDate { get; set; }
 
@@ -75,14 +69,12 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class CustomFields
     {
-
         [JsonProperty("salary_expectations")]
         public object SalaryExpectations { get; set; }
     }
 
     public class Coordinator
     {
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -101,7 +93,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Attachment
     {
-
         [JsonProperty("url")]
         public string Url { get; set; }
 
@@ -114,7 +105,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Source
     {
-
         [JsonProperty("public_name")]
         public string PublicName { get; set; }
 
@@ -124,7 +114,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class ProspectDetail
     {
-
         [JsonProperty("prospect_stage")]
         public object ProspectStage { get; set; }
 
@@ -137,7 +126,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Job
     {
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -147,7 +135,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class CurrentStage
     {
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -157,7 +144,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class CreditedTo
     {
-
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -176,7 +162,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Application
     {
-
         [JsonProperty("status")]
         public string Status { get; set; }
 
@@ -240,7 +225,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Address
     {
-
         [JsonProperty("value")]
         public string Value { get; set; }
 
@@ -250,7 +234,6 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Candidate
     {
-
         [JsonProperty("website_addresses")]
         public List<object> WebsiteAddresses { get; set; }
 
@@ -334,30 +317,44 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     {
         [JsonProperty("id")]
         public int Id { get; set; }
+
         [JsonProperty("version")]
         public int Version { get; set; }
+
         [JsonProperty("application_id")]
         public int ApplicationId { get; set; }
+
         [JsonProperty("job_id")]
         public int JobId { get; set; }
+
         [JsonProperty("candidate_id")]
         public int CandidateId { get; set; }
+
         [JsonProperty("opening")]
         public JobOpening JobOpening { get; set; }
+
         [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
+
         [JsonProperty("updated_at")]
         public DateTime UpdatedAt { get; set; }
+
         [JsonProperty("sent_at")]
         public DateTime SentAt { get; set; }
+
         [JsonProperty("resolved_at")]
         public DateTime ResolvedAt { get; set; }
+
         [JsonProperty("starts_at")]
         public DateTime StartsAt { get; set; }
+
         [JsonProperty("status")]
         public string Status { get; set; }
+
+        // dev note: not mapping the custom fields, use the keyed custom fields instead
         //[JsonProperty("custom_fields")]
         //public Custom_Fields CustomFields { get; set; }
+
         [JsonProperty("keyed_custom_fields")]
         public KeyedCustomField KeyedCustomFields { get; set; }
     }
@@ -366,36 +363,46 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     {
         [JsonProperty("id")]
         public int Id { get; set; }
+
         [JsonProperty("opening_id")]
         public string OpeningId { get; set; }
+
         [JsonProperty("status")]
         public string Status { get; set; }
+
         [JsonProperty("opened_at")]
         public DateTime OpenedAt { get; set; }
+
         [JsonProperty("closed_at")]
         public DateTime? ClosedAt { get; set; }
+
         [JsonProperty("application_id")]
         public int ApplicationId { get; set; }
+
         [JsonProperty("close_reason")]
         public string CloseReason { get; set; }
     }
-
-  
 
     public class KeyedCustomField
     {
         [JsonProperty("time_type")]
         public CustomField TimeType { get; set; }
+
         [JsonProperty("favorite_station")]
         public CustomField FavoriteStation { get; set; }
+
         [JsonProperty("best_seasons")]
         public CustomField BestSeasons { get; set; }
+
         [JsonProperty("start_date")]
         public CustomField StartDate { get; set; }
+
         [JsonProperty("will_negotiate")]
         public CustomField WillNegotiate { get; set; }
+
         [JsonProperty("salary")]
         public CustomField Salary { get; set; }
+
         [JsonProperty("notes")]
         public CustomField Notes { get; set; }
     }
@@ -404,11 +411,11 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     {
         [JsonProperty("name")]
         public string Name { get; set; }
+
         [JsonProperty("type")]
         public string Type { get; set; }
+
         [JsonProperty("value")]
         public string Value { get; set; }
     }
-
-
 }
