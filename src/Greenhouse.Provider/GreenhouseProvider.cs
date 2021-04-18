@@ -161,7 +161,7 @@ namespace CluedIn.Provider.Greenhouse
 
 
             //There is no limit set, so you can pull as often and as much as you want.
-            return await Task.FromResult(new CrawlLimit(-1, TimeSpan.Zero));
+            return await Task.FromResult(new CrawlLimit(-1, TimeSpan.FromSeconds(5)));
         }
 
         // TODO Please see https://cluedin-io.github.io/CluedIn.Documentation/docs/1-Integration/build-integration.html

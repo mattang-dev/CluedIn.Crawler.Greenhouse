@@ -7,13 +7,13 @@ namespace CluedIn.Crawling.Greenhouse.Integration.Test
 {
     public class DataIngestion : IClassFixture<GreenhouseTestFixture>
     {
-        private readonly GreenhouseTestFixture fixture;
-        private readonly ITestOutputHelper output;
+        private readonly GreenhouseTestFixture _fixture;
+        private readonly ITestOutputHelper _output;
 
         public DataIngestion(GreenhouseTestFixture fixture, ITestOutputHelper output)
         {
-            this.fixture = fixture;
-            this.output = output;
+            _fixture = fixture;
+            _output = output;
         }
 
         [Theory]
@@ -22,10 +22,11 @@ namespace CluedIn.Crawling.Greenhouse.Integration.Test
         //[InlineData("SOME_ENTITY_TYPE", 1)]
         public void CorrectNumberOfEntityTypes(string entityType, int expectedCount)
         {
-            var foundCount = fixture.ClueStorage.CountOfType(entityType);
+            var foundCount = _fixture.ClueStorage.CountOfType(entityType);
 
             //You could use this method to output the logs inside the test case
-            fixture.PrintLogs(output);
+
+            _fixture.PrintLogs(_output);
 
             Assert.Equal(expectedCount, foundCount);
         }
@@ -33,11 +34,11 @@ namespace CluedIn.Crawling.Greenhouse.Integration.Test
         [Fact]
         public void EntityCodesAreUnique()
         {
-            var count = fixture.ClueStorage.Clues.Count();
-            var unique = fixture.ClueStorage.Clues.Distinct(new ClueComparer()).Count();
+            var count = _fixture.ClueStorage.Clues.Count();
+            var unique = _fixture.ClueStorage.Clues.Distinct(new ClueComparer()).Count();
 
             //You could use this method to output info of all clues
-            fixture.PrintClues(output);
+            _fixture.PrintClues(_output);
 
             Assert.Equal(unique, count);
         }

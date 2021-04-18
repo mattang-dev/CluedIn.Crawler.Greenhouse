@@ -12,16 +12,16 @@ namespace CluedIn.Crawling.Greenhouse.Core
             public const string ApiKey = nameof(ApiKey);
         }
 
-        // TODO Complete the following section
+   
         // Please see https://cluedin-io.github.io/CluedIn.Documentation/docs/1-Integration/build-integration.html
-        public const string CrawlerDescription = "Greenhouse is a ... to be completed ...";
-        public const string Instructions = "Provide authentication instructions here, if applicable";
+        public const string CrawlerDescription = "Greenhouse is an applicant tracking system and recruiting software";
+        public const string Instructions = "Please see the following URL for more information: https://developers.greenhouse.io/harvest.html?shell#authentication";
         public const IntegrationType Type = IntegrationType.Cloud;
-        public const string Uri = "http://www.sampleurl.com"; //Uri of remote tool if applicable
+        public const string Uri = "https://harvest.greenhouse.io/v1/"; //Uri of remote tool if applicable
 
         // To change the icon see embedded resource
-        // src\Greenhouse.Provider\Resources\cluedin.png
-        public const string IconResourceName = "Resources.cluedin.png";
+        // src\Greenhouse.Provider\Resources\greenhouse.png
+        public const string IconResourceName = "Resources.greenhouse.png";
 
         public static IList<string> ServiceType = new List<string> { "" };
         public static IList<string> Aliases = new List<string> { "" };

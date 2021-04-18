@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoFixture.Xunit2;
-using CluedIn.Core.Crawling;
 using CluedIn.Core.Providers;
 using CluedIn.Crawling.Greenhouse.Core;
 using Xunit;

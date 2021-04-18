@@ -15,7 +15,6 @@ namespace Crawling.Greenhouse.Unit.Test
         public GreenhouseCrawlerBehaviour()
         {
             var nameClientFactory = new Mock<IGreenhouseClientFactory>();
-
             _sut = new GreenhouseCrawler(nameClientFactory.Object);
         }
 
@@ -23,7 +22,6 @@ namespace Crawling.Greenhouse.Unit.Test
         public void GetDataReturnsData()
         {
             var jobData = new CrawlJobData();
-
             _sut.GetData(jobData)
                 .ShouldNotBeNull();
         }

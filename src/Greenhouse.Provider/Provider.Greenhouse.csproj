@@ -3,7 +3,7 @@
     <ProjectReference Include="..\Greenhouse.Infrastructure\Crawling.Greenhouse.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\cluedin.png" />
+    <EmbeddedResource Include="Resources\greenhouse.png" />
     <EmbeddedResource Include="GreenhouseProviderComponent.config">
       <SubType>Designer</SubType>
     </EmbeddedResource>
