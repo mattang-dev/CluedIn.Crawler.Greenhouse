@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Greenhouse.Core\Crawling.Greenhouse.Core.csproj" />
     <ProjectReference Include="..\..\..\src\Greenhouse.Crawling\Crawling.Greenhouse.csproj" />
@@ -7,6 +7,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CluedIn.CrawlerIntegrationTesting" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\packages\moq\4.13.1\lib\netstandard2.0\Moq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <!--
     App.config needs to be copied under dll of _host_ process

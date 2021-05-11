@@ -24,21 +24,21 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
 
         protected override Clue MakeClueImpl(Education input, Guid id)
         {
-            var clue = _factory.Create("/Education", input.Id.ToString(), id);
+            var clue = _factory.Create("/Education", input.id.ToString(), id);
             var data = clue.Data.EntityData;
 
             var vocab = new EducationVocabulary();
 
-            if (!string.IsNullOrEmpty(input.Degree))
+            if (!string.IsNullOrEmpty(input.degree))
             {
-                data.Name = input.Degree;
+                data.Name = input.degree;
             }
 
-            data.Properties[vocab.Degree] = input.Degree.PrintIfAvailable();
-            data.Properties[vocab.EndDate] = input.EndDate.PrintIfAvailable();
-            data.Properties[vocab.Discipline] = input.Discipline.PrintIfAvailable();
-            data.Properties[vocab.StartDate] = input.StartDate.PrintIfAvailable();
-            data.Properties[vocab.SchoolName] = input.SchoolName.PrintIfAvailable();
+            data.Properties[vocab.Degree] = input.degree.PrintIfAvailable();
+            data.Properties[vocab.EndDate] = input.end_date.PrintIfAvailable();
+            data.Properties[vocab.Discipline] = input.discipline.PrintIfAvailable();
+            data.Properties[vocab.StartDate] = input.start_date.PrintIfAvailable();
+            data.Properties[vocab.SchoolName] = input.school_name.PrintIfAvailable();
 
             if (!data.OutgoingEdges.Any())
             {

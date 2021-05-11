@@ -18,24 +18,24 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
 {
 
 
-    public class CandidateClueProducer : BaseClueProducer<Candidate>
+    public class OfferClueProducer : BaseClueProducer<Offer>
     {
         private readonly IClueFactory _factory;
         private readonly ILogger<GreenhouseClient> _log;
 
-        public CandidateClueProducer([NotNull] IClueFactory factory, ILogger<GreenhouseClient> _log)
+        public OfferClueProducer([NotNull] IClueFactory factory, ILogger<GreenhouseClient> _log)
 
         {
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
             this._log = _log;
         }
 
-        protected override Clue MakeClueImpl(Candidate input, Guid id)
+        protected override Clue MakeClueImpl(Offer input, Guid id)
         {
-            var clue = _factory.Create("/Candidate", input.id.ToString(), id);
+            var clue = _factory.Create("/Offer", input.id.ToString(), id);
             var data = clue.Data.EntityData;
 
-            var vocab = new CandidateVocabulary();
+            var vocab = new OfferVocabulary();
 
             if (!string.IsNullOrEmpty(input.first_name) && !string.IsNullOrEmpty(input.last_name))
             {
@@ -53,14 +53,8 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
             {
                 data.CreatedDate = createdDate;
             }
+            _factory.CreateOutgoingEntityReference(clue, "/User", EntityEdgeType.Attended, input.candidate_id, education.GetKey());
 
-            if (input.tags != null)
-            {
-                foreach (var tag in input.tags)
-                {
-                    data.Tags.Add(new Tag(tag));
-                }
-            }
             if (input.social_media_addresses != null)
             {
                 foreach (var socialMediaAddress in input.social_media_addresses)
@@ -80,7 +74,7 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
               
                 foreach (var emailAddress in input.email_addresses)
                 {
-                    var code = new EntityCode("/Candidate", "CluedIn", emailAddress.value);
+                    var code = new EntityCode("/Email", "CluedIn", emailAddress.value);
                     data.Codes.Add(code);
                 }
             }
@@ -92,10 +86,9 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
 
                 foreach (var education in input.educations)
                 {
-                    _factory.CreateOutgoingEntityReference(clue, CommonEntityTypes.School, EntityEdgeType.Attended, education, education.GetKey());
+                    _factory.CreateOutgoingEntityReference(clue, "/School", EntityEdgeType.Attended, education, education.GetKey());
                 }
             }
-            
 
             if (input.employments != null)
                 foreach (var employment in input.employments)
@@ -148,7 +141,5 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
 
             return clue;
         }
-
-     
     }
 }

@@ -7,4 +7,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Mattang.Common.Vocabulary" Version="3.2.2" />
+  </ItemGroup>
 </Project>

@@ -29,21 +29,21 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
 
         protected override Clue MakeClueImpl(Attachment input, Guid id)
         {
-            var clue = _factory.Create(EntityType.Files.File, input.Url.ToString(), id);
+            var clue = _factory.Create(EntityType.Files.File, input.url, id);
             var data = clue.Data.EntityData;
 
-            if (!string.IsNullOrEmpty(input.Filename))
+            if (!string.IsNullOrEmpty(input.filename))
             {
-                data.Name = input.Filename;
+                data.Name = input.filename;
             }
 
-            if (!string.IsNullOrEmpty(input.Url))
+            if (!string.IsNullOrEmpty(input.url))
             {
-                data.Uri = new Uri(input.Url);
+                data.Uri = new Uri(input.url);
             }
 
-            var download = new RestClient().DownloadData(new RestRequest(input.Url));
-            this.Index(download, input.Filename, clue);
+            var download = new RestClient().DownloadData(new RestRequest(input.url));
+            this.Index(download, input.filename, clue);
 
             if (!data.OutgoingEdges.Any())
             {

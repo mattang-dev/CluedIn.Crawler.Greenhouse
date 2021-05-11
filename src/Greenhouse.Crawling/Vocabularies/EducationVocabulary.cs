@@ -21,7 +21,10 @@ namespace CluedIn.Crawling.Greenhouse.Vocabularies
                 EndDate = group.Add(new VocabularyKey("EndDate", VocabularyKeyDataType.Text, VocabularyKeyVisibility.Visible));
                 Discipline = group.Add(new VocabularyKey("Discipline", VocabularyKeyDataType.Text, VocabularyKeyVisibility.Visible));
                 SchoolName = group.Add(new VocabularyKey("SchoolName", VocabularyKeyDataType.Text, VocabularyKeyVisibility.Visible));
-                StartDate = group.Add(new VocabularyKey("StartDate", VocabularyKeyDataType.Text, VocabularyKeyVisibility.Visible));
+
+                StartDate = group.Add(new VocabularyKey("StartDate", VocabularyKeyDataType.Text,
+                    VocabularyKeyVisibility.Visible));
+
             });
 
         }
