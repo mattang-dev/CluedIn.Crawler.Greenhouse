@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Reflection;
 using Castle.MicroKernel.Registration;
@@ -10,7 +11,7 @@ using DebugCrawlerHost = CrawlerIntegrationTesting.CrawlerHost.DebugCrawlerHost<
 
 namespace CluedIn.Crawling.Greenhouse.Integration.Test
 {
-    public class GreenhouseTestFixture
+    public class GreenhouseTestFixture : IntegrationTest
     {
         public ClueStorage ClueStorage { get; }
         private readonly DebugCrawlerHost debugCrawlerHost;
@@ -23,6 +24,13 @@ namespace CluedIn.Crawling.Greenhouse.Integration.Test
             debugCrawlerHost = new DebugCrawlerHost(executingFolder, GreenhouseConstants.ProviderName, c => {
                 c.Register(Component.For<ILogger>().UsingFactoryMethod(_ => NullLogger.Instance).LifestyleSingleton());
                 c.Register(Component.For<ILoggerFactory>().UsingFactoryMethod(_ => NullLoggerFactory.Instance).LifestyleSingleton());
+
+                c.Register(Component.For<GreenhouseCrawlJobData>().UsingFactoryMethod(_ => new GreenhouseCrawlJobData
+                    {
+                    LastCrawlFinishTime = DateTimeOffset.UtcNow.AddDays(-1), // one year ago
+                    ApiKey = "cea405ac4796defb9ab7dea89f8f09fb-4"
+                })
+                    .LifestyleSingleton());
             });
 
             ClueStorage = new ClueStorage();

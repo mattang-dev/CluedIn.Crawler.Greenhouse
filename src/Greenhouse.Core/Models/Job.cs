@@ -16,7 +16,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public DateTime closed_at { get; set; }
         public DateTime updated_at { get; set; }
         public bool is_template { get; set; }
-        public int copied_from_id { get; set; }
+        public string copied_from_id { get; set; }
         public List<Department> departments { get; set; }
         public List<Office> offices { get; set; }
         public Custom_Fields custom_fields { get; set; }
@@ -34,8 +34,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Salary_Range
     {
-        public int min_value { get; set; }
-        public int max_value { get; set; }
+        public string min_value { get; set; }
+        public string max_value { get; set; }
         public string unit { get; set; }
     }
 
@@ -69,8 +69,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 
     public class Value
     {
-        public int min_value { get; set; }
-        public int max_value { get; set; }
+        public string min_value { get; set; }
+        public string max_value { get; set; }
         public string unit { get; set; }
     }
 
@@ -119,8 +119,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     public class Department : EntityWithIdKey
     {
         public string name { get; set; }
-        public int parent_id { get; set; }
-        public List<int> child_ids { get; set; }
+        public string parent_id { get; set; }
+        public List<long> child_ids { get; set; }
         public string external_id { get; set; }
     }
 
@@ -128,9 +128,9 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     {
         public string name { get; set; }
         public Location location { get; set; }
-        public int primary_contact_user_id { get; set; }
-        public int parent_id { get; set; }
-        public List<int> child_ids { get; set; }
+        public string primary_contact_user_id { get; set; }
+        public string parent_id { get; set; }
+        public List<long> child_ids { get; set; }
         public string external_id { get; set; }
     }
 
@@ -145,7 +145,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string status { get; set; }
         public DateTime opened_at { get; set; }
         public DateTime? closed_at { get; set; }
-        public int? application_id { get; set; }
+        public string application_id { get; set; }
         public Close_Reason close_reason { get; set; }
     }
 

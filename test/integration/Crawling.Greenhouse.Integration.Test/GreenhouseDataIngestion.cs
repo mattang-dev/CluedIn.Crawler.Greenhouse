@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace CluedIn.Crawling.Greenhouse.Integration.Test
 {
-    public class DataIngestion : IClassFixture<GreenhouseTestFixture>
+    public class DataIngestion : IntegrationTest, IClassFixture<GreenhouseTestFixture>
     {
         private readonly GreenhouseTestFixture _fixture;
         private readonly ITestOutputHelper _output;
@@ -25,7 +25,7 @@ namespace CluedIn.Crawling.Greenhouse.Integration.Test
             var foundCount = _fixture.ClueStorage.CountOfType(entityType);
 
             //You could use this method to output the logs inside the test case
-
+            _output.WriteLine($"entity types: {foundCount}");
             _fixture.PrintLogs(_output);
 
             Assert.Equal(expectedCount, foundCount);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 // ReSharper disable InconsistentNaming
@@ -6,6 +7,12 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
 {
     public class Candidate : EntityWithIdKey
     {
+        public Candidate()
+        {
+
+        }
+
+     
         public string first_name { get; set; }
         public string last_name { get; set; }
         public string company { get; set; }
@@ -19,21 +26,21 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         [AlwaysNull]
         private string photo_url { get; set; }
 
-        public Attachment[] attachments { get; set; }
-        public int[] application_ids { get; set; }
-        public Phone_Numbers[] phone_numbers { get; set; }
-        public Address[] addresses { get; set; }
-        public Email_Addresses[] email_addresses { get; set; }
-        public Website_Addresses[] website_addresses { get; set; }
-        public object[] social_media_addresses { get; set; }
+        public List<Attachment> attachments { get; set; }
+        public List<string> application_ids { get; set; }
+        public List<Phone_Numbers> phone_numbers { get; set; }
+        public List<Address> addresses { get; set; }
+        public List<Email_Addresses> email_addresses { get; set; }
+        public List<Website_Addresses> website_addresses { get; set; }
+        public List<dynamic> social_media_addresses { get; set; }
         public Recruiter recruiter { get; set; }
         public Coordinator coordinator { get; set; }
         public bool can_email { get; set; }
-        public string[] tags { get; set; }
-        public Application[] applications { get; set; }
-        public Education[] educations { get; set; }
-        public Employment[] employments { get; set; }
-        public int[] linked_user_ids { get; set; }
+        public List<string> tags { get; set; }
+        public List<Application> applications { get; set; }
+        public List<Education> educations { get; set; }
+        public List<Employment> employments { get; set; }
+        public List<string> linked_user_ids { get; set; }
         public Custom_Fields custom_fields { get; set; }
         public Keyed_Custom_Fields keyed_custom_fields { get; set; }
     }
@@ -43,8 +50,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public string school_name { get; set; }
         public string degree { get; set; }
         public string discipline { get; set; }
-        public DateTime start_date { get; set; }
-        public DateTime end_date { get; set; }
+        public DateTime? start_date { get; set; }
+        public DateTime? end_date { get; set; }
     }
 
     public partial class Custom_Fields
@@ -110,8 +117,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     {
         public string company_name { get; set; }
         public string title { get; set; }
-        public DateTime start_date { get; set; }
-        public DateTime end_date { get; set; }
+        public DateTime? start_date { get; set; }
+        public DateTime? end_date { get; set; }
     }
 
     public class Notes

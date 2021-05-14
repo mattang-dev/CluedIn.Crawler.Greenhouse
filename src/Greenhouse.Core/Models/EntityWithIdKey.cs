@@ -5,7 +5,7 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
     public class EntityWithIdKey
     {
         [Key]
-        public int id { get; set; }
+        public long id { get; set; }
 
         public string GetKey()
         {

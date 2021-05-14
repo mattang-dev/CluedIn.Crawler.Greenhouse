@@ -1,14 +1,13 @@
 using System;
 using AutoFixture.Xunit2;
 using CluedIn.Core.Data;
-using CluedIn.Crawling;
 using CluedIn.Crawling.Factories;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Shouldly;
 using Xunit;
 
-namespace Crawling.Greenhouse.Unit.Test.ClueProducers
+namespace CluedIn.Crawling.Greenhouse.Unit.Test.ClueProducers
 {
     public abstract class BaseClueProducerTest<T>
     {
@@ -41,14 +40,14 @@ namespace Crawling.Greenhouse.Unit.Test.ClueProducers
             Sut.MakeClue(input, new Guid())
                 .Data.EntityData.Name.ShouldNotBeEmpty();
 
-        [Theory]
-        [InlineAutoData]
-        protected void ClueIsOfType(T input)
-        {
-            Sut.MakeClue(input, new Guid());
-            _clueFactory.Verify(
-                f => f.Create(ExpectedEntityType, It.IsAny<string>(), It.IsAny<Guid>())
-                );
-        }
+        //[Theory]
+        //[InlineAutoData]
+        //protected void ClueIsOfType(T input)
+        //{
+        //    Sut.MakeClue(input, new Guid());
+        //    _clueFactory.Verify(
+        //        f => f.Create(ExpectedEntityType, It.IsAny<string>(), It.IsAny<Guid>())
+        //        );
+        //}
     }
 }

@@ -23,12 +23,12 @@ namespace CluedIn.Crawling.Greenhouse
                 yield break;
             }
             var client = _clientFactory.CreateNew(greenhousecrawlJobData);
-            var users = client.GetUsers(jobData.LastCrawlFinishTime);
+            var users = client.GetUsers();
             foreach (var user in users)
             {
                 yield return user;
             }
-            foreach (var candidate in client.GetCandidates(jobData.LastCrawlFinishTime))
+            foreach (var candidate in client.GetCandidates())
             {
                 yield return candidate.educations;
                 yield return candidate.attachments;
@@ -36,27 +36,27 @@ namespace CluedIn.Crawling.Greenhouse
                 yield return candidate.addresses;
                 yield return candidate;
             }
-            var jobs = client.GetJobs(jobData.LastCrawlFinishTime);
+            var jobs = client.GetJobs();
             foreach (var job in jobs)
             {
                 yield return job;
             }
-            var offices = client.GetOffices(jobData.LastCrawlFinishTime);
+            var offices = client.GetOffices();
             foreach (var office in offices)
             {
                 yield return office;
             }
-            var offers = client.GetOffers(jobData.LastCrawlFinishTime);
+            var offers = client.GetOffers();
             foreach (var offer in offers)
             {
                 yield return offer;
             }
-            var departments = client.GetDepartments(jobData.LastCrawlFinishTime);
+            var departments = client.GetDepartments();
             foreach (var department in departments)
             {
                 yield return department;
             }
-            var applications = client.GetApplications(jobData.LastCrawlFinishTime);
+            var applications = client.GetApplications();
             foreach (var application in applications)
             {
                 yield return application;

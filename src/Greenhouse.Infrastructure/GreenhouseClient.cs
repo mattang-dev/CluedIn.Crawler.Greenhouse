@@ -1,15 +1,12 @@
 using System;
-using System.Collections;
-using System.Net;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 using CluedIn.Core.Providers;
 using CluedIn.Crawling.Greenhouse.Core;
-using Newtonsoft.Json;
-using RestSharp;
-using Microsoft.Extensions.Logging;
-using RestSharp.Authenticators;
 using CluedIn.Crawling.Greenhouse.Core.Models;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
+using RestSharp;
+using RestSharp.Authenticators;
 
 namespace CluedIn.Crawling.Greenhouse.Infrastructure
 {
@@ -20,142 +17,125 @@ namespace CluedIn.Crawling.Greenhouse.Infrastructure
     // This class should not contain crawling logic (i.e. in which order things are retrieved)
     public class GreenhouseClient
     {
-        private const string BaseUri = "https://harvest.greenhouse.io/";
+        private const string BaseUri = "https://harvest.greenhouse.io/v1/";
+        private readonly GreenhouseCrawlJobData _crawlJobData;
+        private readonly ILogger<GreenhouseClient> _logger;
+        private readonly IRestClient _restClient;
+        private string _lastcrawlDateStr;
 
-        private readonly ILogger<GreenhouseClient> log;
-
-        private readonly IRestClient client;
-
-        private readonly GreenhouseCrawlJobData _greenhouseCrawlJobData;
-
-        public GreenhouseClient(ILogger<GreenhouseClient> log, GreenhouseCrawlJobData greenhouseCrawlJobData, IRestClient client) // TODO: pass on any extra dependencies
+        public GreenhouseClient(ILogger<GreenhouseClient> log, GreenhouseCrawlJobData crawlJobData, IRestClient client)
         {
-            if (greenhouseCrawlJobData == null)
+            if (crawlJobData == null)
             {
-                throw new ArgumentNullException(nameof(greenhouseCrawlJobData));
+                throw new ArgumentNullException(nameof(crawlJobData));
             }
-
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-
-            this.log = log ?? throw new ArgumentNullException(nameof(log));
-            this.client = client ?? throw new ArgumentNullException(nameof(client));
-
-            // TODO use info from greenhouseCrawlJobData to instantiate the connection
-            client.BaseUrl = new Uri(BaseUri);
-            // client.AddDefaultParameter("api_key", greenhouseCrawlJobData.ApiKey, ParameterType.QueryString);
-            client.AddDefaultHeader("Authorization", $"Basic {greenhouseCrawlJobData.ApiKey}");
-            _greenhouseCrawlJobData = greenhouseCrawlJobData;
+            _lastcrawlDateStr = crawlJobData.LastCrawlFinishTime.ToString("o");
+            _restClient = client ?? throw new ArgumentNullException(nameof(client));
+            _logger = log ?? throw new ArgumentNullException(nameof(log));
+            _restClient.BaseUrl = new Uri(BaseUri);
+            _restClient.AddDefaultHeader("Authorization", $"Basic {crawlJobData.ApiKey}");
+            _crawlJobData = crawlJobData;
+            _restClient.Authenticator = new HttpBasicAuthenticator(_crawlJobData.ApiKey, "");
         }
 
-        public IEnumerable<Candidate> GetCandidates(DateTimeOffset lastCrawlDatetime)
+        public IEnumerable<Candidate> GetCandidates()
         {
-            var results = new List<Candidate>();
-            var perPage = 5;
+            var dataRetriever = new RestDataRetriever<Candidate>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("candidates");
+            return results;
+        }
+
+        public IEnumerable<Job> GetJobs()
+        {
+            var dataRetriever = new RestDataRetriever<Job>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("jobs");
+            return results;
+        }
+
+        public IEnumerable<Office> GetOffices()
+        {
+            var dataRetriever = new RestDataRetriever<Office>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("offices");
+            return results;
+        }
+
+        public IEnumerable<Offer> GetOffers()
+        {
+            var dataRetriever = new RestDataRetriever<Offer>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("offers");
+            return results;
+        }
+
+        public IEnumerable<Application> GetApplications()
+        {
+            var dataRetriever = new RestDataRetriever<Application>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("applications");
+            return results;
+        }
+
+        public IEnumerable<Department> GetDepartments()
+        {
+            var dataRetriever = new RestDataRetriever<Department>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("departments");
+            return results;
+        }
+
+        public AccountInformation GetAccountInformation()
+        {
+            //TODO - return some unique information about the remote data source
+            // that uniquely identifies the account
+            return new AccountInformation(_crawlJobData.ApiKey, "Greenhouse");
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            var dataRetriever = new RestDataRetriever<User>(_restClient, _crawlJobData);
+            var results = dataRetriever.GetPagedData("users");
+            return results;
+        }
+    }
+
+    public class RestDataRetriever<T> where T : new()
+    {
+        private readonly GreenhouseCrawlJobData _crawlJobData;
+        private readonly string _lastCrawlDateStrIso8601;
+        private readonly IRestClient _restClient;
+
+        public RestDataRetriever(IRestClient restClient, GreenhouseCrawlJobData crawlJobData)
+        {
+            _restClient = restClient;
+            _crawlJobData = crawlJobData;
+            _lastCrawlDateStrIso8601 = _crawlJobData.LastCrawlFinishTime.ToString("o");
+        }
+
+        [GetHttpCall]
+        public List<T> GetPagedData(string urlSegment, int perPage = 500)
+        {
+            var results = new List<T>();
             var page = 1;
-            var lastcrawlDateStr = lastCrawlDatetime.ToString("o");
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
             while (true)
             {
-                var request = new RestRequest("candidates", Method.GET);
-                client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
+                var request = new RestRequest(urlSegment, Method.GET);
+                _restClient.Authenticator = new HttpBasicAuthenticator(_crawlJobData.ApiKey, "");
+                _restClient.AddDefaultHeader("Authorization", $"Basic {_crawlJobData.ApiKey}");
                 request.AddQueryParameter("per_page", perPage.ToString());
                 request.AddQueryParameter("page", page.ToString());
-                request.AddQueryParameter("updated_after", lastcrawlDateStr);
-                var response = client.Execute<List<Candidate>>(request);
+                request.AddQueryParameter("updated_after", _lastCrawlDateStrIso8601);
+                var response = _restClient.Execute<IEnumerable<T>>(request);
                 if (!response.IsSuccessful)
                 {
                     throw new Exception(response.ErrorMessage);
                 }
-                
-                if (response.Data.Count < perPage)
+                results.AddRange(response.Data);
+                page++;
+                if (response.Data.Count() < perPage)
                 {
                     break;
                 }
             }
             return results;
         }
-
-
-
-        public IEnumerable<Job> GetJobs(DateTimeOffset jobDataLastCrawlFinishTime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-            var request = new RestRequest("jobs", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            var response = client.Execute<List<Job>>(request);
-            var content = response.Data;
-            return content;
-        }
-
-
-        public IEnumerable<Office> GetOffices(DateTimeOffset jobDataLastCrawlFinishTime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-            var request = new RestRequest("offices", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            var response = client.Execute<List<Office>>(request);
-            var content = response.Data;
-            return content;
-        }
-
-        public IEnumerable<Offer> GetOffers(DateTimeOffset jobDataLastCrawlFinishTime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-            var request = new RestRequest("offers", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            var response = client.Execute<List<Offer>>(request);
-            var content = response.Data;
-            return content;
-        }
-
-        public IEnumerable<Application> GetApplications(DateTimeOffset lastCrawlDatetime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-
-            List<Application> results = new List<Application>();
-
-            var request = new RestRequest("applications", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            var response = client.Execute<List<Application>>(request);
-            var content = response.Data;
-
-            // loop for paginated Data
-
-
-
-
-            return content;
-        }
-
-        public IEnumerable<Department> GetDepartments(DateTimeOffset lastCrawlDatetime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-            var request = new RestRequest("departments", Method.GET);
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            request.AddQueryParameter("updated_after", lastCrawlDatetime.ToString("o"));
-            var response = client.Execute<List<Department>>(request);
-            var content = response.Data;
-            return content;
-        }
-        public AccountInformation GetAccountInformation()
-        {
-            //TODO - return some unique information about the remote data source
-            // that uniquely identifies the account
-            return new AccountInformation(_greenhouseCrawlJobData.ApiKey, "Greenhouse");
-        }
-
-        public IEnumerable<User> GetUsers(DateTimeOffset lastCrawlDatetime)
-        {
-            var client = new RestClient("https://harvest.greenhouse.io/v1");
-            var request = new RestRequest("users", Method.GET);
-            request.AddQueryParameter("updated_after", lastCrawlDatetime.ToString("o"));
-            client.Authenticator = new HttpBasicAuthenticator(_greenhouseCrawlJobData.ApiKey, "");
-            var response = client.Execute<List<User>>(request);
-            var content = response.Data;
-            return content;
-        }
     }
+
+    public class GetHttpCallAttribute : Attribute { }
 }

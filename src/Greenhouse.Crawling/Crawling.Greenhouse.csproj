@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\Greenhouse.Infrastructure\Crawling.Greenhouse.Infrastructure.csproj" />
   </ItemGroup>
@@ -8,6 +8,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Mattang.Common.Vocabulary" Version="3.2.2" />
+    <PackageReference Include="Mattang.Common.Vocabulary"  />
   </ItemGroup>
+
 </Project>

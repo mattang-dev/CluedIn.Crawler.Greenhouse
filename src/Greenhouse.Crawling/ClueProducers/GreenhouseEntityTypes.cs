@@ -5,5 +5,7 @@ namespace CluedIn.Crawling.Greenhouse.ClueProducers
     public static class GreenhouseEntityTypes
     {
         public static readonly EntityEdgeType Employee = (EntityEdgeType)"/Employee";
+        public static readonly EntityEdgeType Candidate = (EntityEdgeType)"/Candidate";
+       
     }
 }

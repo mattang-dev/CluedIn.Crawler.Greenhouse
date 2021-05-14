@@ -13,6 +13,11 @@
       <HintPath>..\..\..\packages\moq\4.13.1\lib\netstandard2.0\Moq.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <None Update="gh_candidates.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <!--
     App.config needs to be copied under dll of _host_ process
     i.e. the test runner itself

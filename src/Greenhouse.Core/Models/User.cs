@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CluedIn.Crawling.Greenhouse.Core.Models
 {
@@ -13,8 +14,8 @@ namespace CluedIn.Crawling.Greenhouse.Core.Models
         public DateTime created_at { get; set; }
         public bool disabled { get; set; }
         public bool site_admin { get; set; }
-        public string[] emails { get; set; }
+        public List<string> emails { get; set; }
         public string employee_id { get; set; }
-        public int[] linked_candidate_ids { get; set; }
+        public List<long> linked_candidate_ids { get; set; }
     }
 }

@@ -1,12 +1,10 @@
 using CluedIn.Core.Crawling;
-using CluedIn.Crawling;
-using CluedIn.Crawling.Greenhouse;
 using CluedIn.Crawling.Greenhouse.Infrastructure.Factories;
 using Moq;
 using Shouldly;
 using Xunit;
 
-namespace Crawling.Greenhouse.Unit.Test
+namespace CluedIn.Crawling.Greenhouse.Unit.Test
 {
     public class GreenhouseCrawlerBehaviour
     {
